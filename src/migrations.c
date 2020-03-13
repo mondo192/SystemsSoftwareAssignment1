@@ -19,8 +19,8 @@ void transfer() {
   sleep(5);
   
   // debug: bug appeard when using the global versions.
-  char local_transfers_dir[100];
-  strcpy(local_transfers_dir, transfers_dir);
+  char local_migrations_dir[100];
+  strcpy(local_migrations_dir, migrations_dir);
   
   char local_live_html_dir[100];
   strcpy(local_live_html_dir, live_html_dir);
@@ -30,7 +30,7 @@ void transfer() {
   int i = 0;
   int num_lines = 0;
   
-  fp = fopen(local_transfers_dir, "r");
+  fp = fopen(local_migrations_dir, "r");
   if (fp == NULL) {
     printf("Could not open file");
     exit(EXIT_FAILURE);
@@ -66,7 +66,7 @@ void get_transfers() {
   int fd;
   char data[4096];
 
-  FILE *file = fopen(transfers_dir, "w");
+  FILE *file = fopen(migrations_dir, "w");
   
   fd = fileno(file);
   
@@ -82,7 +82,7 @@ void get_transfers() {
   } else if (pid == 0) {
     close(pipefd[0]);
     close(pipefd[1]);
-    execlp("find", "find", dev_html_dir, "-mtime", "-1", "-type", "f", NULL);
+    execlp("find", "find", intranet_html_dir, "-mtime", "-1", "-type", "f", NULL);
 
     perror("Error with ls -al");
     _exit(1);
@@ -101,21 +101,21 @@ void get_transfers() {
       mqd_t mq;
       char buffer[1024];
       mq = mq_open(QUEUE_NAME, O_WRONLY);
-      mq_send(mq, "transfer_success", 1024, 0);
+      mq_send(mq, "migration_success", 1024, 0);
       mq_close(mq);
       
       openlog("Change_tracker", LOG_PID|LOG_CONS, LOG_USER);
-      syslog(LOG_INFO, "Transfer success");
+      syslog(LOG_INFO, "Migration success");
       closelog();
     } else {
       mqd_t mq;
       char buffer[1024];
       mq = mq_open(QUEUE_NAME, O_WRONLY);
-      mq_send(mq, "transfer_failure", 1024, 0);
+      mq_send(mq, "migration_failure", 1024, 0);
       mq_close(mq);
       
       openlog("Change_tracker", LOG_PID|LOG_CONS, LOG_USER);
-      syslog(LOG_INFO, "Transfer failure");
+      syslog(LOG_INFO, "Migration failure");
       closelog();
     }
   }
