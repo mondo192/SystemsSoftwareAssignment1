@@ -1,0 +1,12 @@
+[Unit]
+Description=Daemon that backups and logs users.
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/main
+Restart=on-failure
+RestartSec=10
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
