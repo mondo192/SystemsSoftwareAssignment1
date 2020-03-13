@@ -11,10 +11,10 @@
 
 #define QUEUE_NAME "/queue"
 
-void get_transfers();
+void get_migrations();
 
-void transfer() {
-  get_transfers();
+void migrate() {
+  get_migrations();
   // stop process for a while to run this function
   sleep(5);
   
@@ -60,7 +60,7 @@ void transfer() {
 }
 
 // use "find" to get changes
-void get_transfers() {
+void get_migrations() {
   int pid;
   int pipefd[2];
   int fd;
@@ -85,7 +85,7 @@ void get_transfers() {
     execlp("find", "find", intranet_html_dir, "-mtime", "-1", "-type", "f", NULL);
 
     perror("Error with ls -al");
-    _exit(1);
+    exit(1);
   } else {
     int status;
     pid = wait(&status);

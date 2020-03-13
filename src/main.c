@@ -53,8 +53,8 @@ int main() {
     time(&now);
     
     midnight = *localtime(&now);
-    midnight.tm_hour = 19; 
-    midnight.tm_min = 5; 
+    midnight.tm_hour = 20; 
+    midnight.tm_min = 45; 
     midnight.tm_sec = 0;
     
     // add the signal handler
@@ -78,7 +78,7 @@ int main() {
       //at midnight call the functions    
         lock_dir();
         backup();
-        transfer();
+        migrate();
         unlock_dir();
       } else {
         //otherwise run changes()
@@ -104,7 +104,7 @@ void signal_handler(int sig_no) {
     //call functions
     lock_dir();
     backup();
-    transfer();
+    migrate();
     unlock_dir();
   }
 }

@@ -6,4 +6,4 @@ const char intranet_html_dir[100] = "/home/eamonn/SystemsSoftwareAssignment1/var
 const char live_html_dir[100] = "/home/eamonn/SystemsSoftwareAssignment1/var/www/html/live";
 const char changes_dir[100] = "/home/eamonn/SystemsSoftwareAssignment1/root/changes.txt";
 const char migrations_dir[100] = "/home/eamonn/SystemsSoftwareAssignment1/root/migrations.txt";
-const char backup_dir[100] = "/home/eamonn/SystemsSoftwareAssignment1/backup";
+const char backup_dir[100] = "/home/eamonn/SystemsSoftwareAssignment1/backup/";

@@ -60,7 +60,7 @@ void get_changes() {
     
     // error check
     perror("Error with ls -al");
-    _exit(1);
+    exit(1);
   }
 
   // pipe awk and sort
@@ -95,7 +95,7 @@ void get_changes() {
 
     // error check
     perror("bad exec grep root");
-    _exit(1);
+    exit(1);
   }
 
   // close fds
@@ -120,7 +120,7 @@ void get_changes() {
 
     // error check
     perror("Error with sort");
-    _exit(1);
+    exit(1);
   } else {
     close(pipefd2[1]);
     int nbytes = read(pipefd2[0], data, sizeof(data));

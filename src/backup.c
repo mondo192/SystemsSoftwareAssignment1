@@ -27,7 +27,7 @@ void backup() {
   
   strftime(str_timestamp, sizeof(str_timestamp), "%Y%m%d%H%M%S", tm);
   
-  strcat(local_backup_dir,str_timestamp );
+  strcat(local_backup_dir,str_timestamp);
   
   pid_t pid;
   
@@ -42,12 +42,12 @@ void backup() {
     exit(1);
   } else if (pid == 0) {
     char *command = "/bin/cp";
-    char *arguments[] = { "cp", "-a", local_live_dir, local_backup_dir, NULL };
+    char *arguments[] = { "sudo cp", "-a", local_live_dir, local_backup_dir, NULL };
     execvp(command, arguments);
 
     // error check
     perror("Error with cp");
-    _exit(1);
+    exit(1);
   } else {
     int status;
     pid = wait(&status);
