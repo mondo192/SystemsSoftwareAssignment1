@@ -11,16 +11,16 @@
 
 #define QUEUE_NAME "/queue"
 
-void get_migrations();
+void get_transfers();
 
-void migrate() {
-  get_migrations();
+void transfer() {
+  get_transfers();
   // stop process for a while to run this function
   sleep(5);
   
   // debug: bug appeard when using the global versions.
-  char local_migrations_dir[100];
-  strcpy(local_migrations_dir, migrations_dir);
+  char local_transfers_dir[100];
+  strcpy(local_transfers_dir, transfers_dir);
   
   char local_live_html_dir[100];
   strcpy(local_live_html_dir, live_html_dir);
@@ -30,7 +30,7 @@ void migrate() {
   int i = 0;
   int num_lines = 0;
   
-  fp = fopen(local_migrations_dir, "r");
+  fp = fopen(local_transfers_dir, "r");
   if (fp == NULL) {
     printf("Could not open file");
     exit(EXIT_FAILURE);
@@ -60,13 +60,13 @@ void migrate() {
 }
 
 // use "find" to get changes
-void get_migrations() {
+void get_transfers() {
   int pid;
   int pipefd[2];
   int fd;
   char data[4096];
 
-  FILE *file = fopen(migrations_dir, "w");
+  FILE *file = fopen(transfers_dir, "w");
   
   fd = fileno(file);
   

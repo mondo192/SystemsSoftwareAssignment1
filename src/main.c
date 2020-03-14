@@ -9,7 +9,7 @@
 #include "changes.h"
 #include "routes.h"
 #include "backup.h"
-#include "migrations.h"
+#include "transfers.h"
 #include "queue.h"
 
 //constructor is used to handle the time and when the backup should happen automaticlly
@@ -53,8 +53,8 @@ int main() {
     time(&now);
     
     midnight = *localtime(&now);
-    midnight.tm_hour = 20; 
-    midnight.tm_min = 45; 
+    midnight.tm_hour = 22; 
+    midnight.tm_min = 27; 
     midnight.tm_sec = 0;
     
     // add the signal handler
@@ -78,7 +78,7 @@ int main() {
       //at midnight call the functions    
         lock_dir();
         backup();
-        migrate();
+        transfer();
         unlock_dir();
       } else {
         //otherwise run changes()
@@ -104,7 +104,7 @@ void signal_handler(int sig_no) {
     //call functions
     lock_dir();
     backup();
-    migrate();
+    transfer();
     unlock_dir();
   }
 }

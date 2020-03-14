@@ -1,6 +1,6 @@
 #ifndef TRANSFER_H_
 #define TRANSFER_H_
 
-void migrate();
+void transfer();
 
 #endif
