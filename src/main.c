@@ -59,8 +59,8 @@ int main()
         time(&now);
 
         midnight = *localtime(&now);
-        midnight.tm_hour = 11;
-        midnight.tm_min = 35;
+        midnight.tm_hour = 18;
+        midnight.tm_min = 5;
         midnight.tm_sec = 0;
 
         // add the signal handler
