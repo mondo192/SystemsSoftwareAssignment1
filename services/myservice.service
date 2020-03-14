@@ -2,7 +2,7 @@
 Description=Daemon that backups and logs users.
 
 [Service]
-Type=simple
+Type=forking
 ExecStart=/usr/bin/main
 Restart=on-failure
 RestartSec=10

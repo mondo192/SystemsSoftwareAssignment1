@@ -19,7 +19,7 @@ void signal_handler(int sig_no);
 void lock_dir();
 void unlock_dir();
 
-int main()
+int main(int argc, const char* argv[])
 {
     int pid = fork();
 
@@ -57,11 +57,18 @@ int main()
         struct tm midnight;
         double seconds;
         time(&now);
-
-        midnight = *localtime(&now);
-        midnight.tm_hour = 18;
-        midnight.tm_min = 5;
-        midnight.tm_sec = 0;
+		
+		midnight = *localtime(&now);
+		if (argc > 2) {
+				midnight.tm_hour = strtol(argv[1], NULL, 10);
+				midnight.tm_min = strtol(argv[2], NULL, 10);
+				midnight.tm_sec = 0;
+		} else {
+				midnight.tm_hour = 0;
+				midnight.tm_min = 0;
+				midnight.tm_sec = 0;
+		}
+		
 
         // add the signal handler
         if (signal(SIGINT, signal_handler) == SIG_ERR)

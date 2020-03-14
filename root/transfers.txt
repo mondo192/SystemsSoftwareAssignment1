@@ -1,2 +1,1 @@
-/home/eamonn/SystemsSoftwareAssignment1/webapp/intranet/var/www/html/homepage.html
 /home/eamonn/SystemsSoftwareAssignment1/webapp/intranet/var/www/html/index.html
