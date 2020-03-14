@@ -80,6 +80,7 @@ void get_transfers()
     dup2(fd, STDOUT_FILENO);
     close(fd);
 
+    // a unidirectional data channel that can be used for interprocess communication.
     pipe(pipefd);
 
     if ((pid = fork()) == -1)
@@ -91,6 +92,7 @@ void get_transfers()
     {
         close(pipefd[0]);
         close(pipefd[1]);
+        // File's  data  was last modified n*24 hours ago and its a regular file type
         execlp("find", "find", intranet_html_dir, "-mtime", "-1", "-type", "f", NULL);
 
         perror("Error with ls -al");
@@ -113,11 +115,11 @@ void get_transfers()
             mqd_t mq;
             char buffer[1024];
             mq = mq_open(QUEUE_NAME, O_WRONLY);
-            mq_send(mq, "migration_success", 1024, 0);
+            mq_send(mq, "transfer_success", 1024, 0);
             mq_close(mq);
 
             openlog("Change_tracker", LOG_PID | LOG_CONS, LOG_USER);
-            syslog(LOG_INFO, "Migration success");
+            syslog(LOG_INFO, "Transfer success");
             closelog();
         }
         else
@@ -125,11 +127,11 @@ void get_transfers()
             mqd_t mq;
             char buffer[1024];
             mq = mq_open(QUEUE_NAME, O_WRONLY);
-            mq_send(mq, "migration_failure", 1024, 0);
+            mq_send(mq, "transfer_failure", 1024, 0);
             mq_close(mq);
 
             openlog("Change_tracker", LOG_PID | LOG_CONS, LOG_USER);
-            syslog(LOG_INFO, "Migration failure");
+            syslog(LOG_INFO, "transfer failure");
             closelog();
         }
     }

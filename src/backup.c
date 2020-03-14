@@ -26,8 +26,10 @@ void backup()
     t = time(NULL);
     tm = localtime(&t);
 
+    // format the timestamp 
     strftime(str_timestamp, sizeof(str_timestamp), "%Y%m%d%H%M%S", tm);
 
+    // append the timestamp string to directory
     strcat(local_backup_dir, str_timestamp);
 
     pid_t pid;
@@ -46,7 +48,7 @@ void backup()
     else if (pid == 0)
     {
         char *command = "/bin/cp";
-        char *arguments[] = {"sudo cp", "-a", local_live_dir, local_backup_dir, NULL};
+        char *arguments[] = {"cp", "-a", local_live_dir, local_backup_dir, NULL};
         execvp(command, arguments);
 
         // error check

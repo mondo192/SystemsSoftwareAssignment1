@@ -16,17 +16,24 @@ void changes()
 {
     int fd;
 
+    // The  dup() system call creates a copy of the file descriptor oldfd, 
+    // using the lowest-numbered unused file descriptor for the new descriptor.
     int saved_stdout = dup(STDOUT_FILENO);
 
     FILE *file = fopen(changes_dir, "a");
 
+    // The function fileno() examines the argument stream and returns its integer file descriptor.
     fd = fileno(file);
 
+    // The dup2() system call performs the same task as dup(), but instead of using the 
+    // lowest-num‐bered unused file descriptor, it uses the file descriptor number specified in newfd.  
+    // If the file descriptor newfd was previously open, it is silently closed before being reused.
     dup2(fd, STDOUT_FILENO);
     close(fd);
 
     get_changes();
 
+    // clear stdout
     fflush(stdout);
     dup2(saved_stdout, STDOUT_FILENO);
     close(saved_stdout);
