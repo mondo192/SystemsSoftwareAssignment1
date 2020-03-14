@@ -128,6 +128,7 @@ void signal_handler(int sig_no)
 //locks after update
 void lock_dir()
 {
+    // Can read, can't write and can execute.
     char mode[4] = "0555";
     int i = strtol(mode, 0, 8);
 
@@ -147,6 +148,7 @@ void lock_dir()
 //unlocks directoy after update and backup is done.
 void unlock_dir()
 {
+    // Can read, can write and can execute.
     char mode[4] = "0777";
     int i = strtol(mode, 0, 8);
     if (chmod(intranet_dir, i) == 0)
